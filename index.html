@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <style>
+        
+        h3 {
+            color: red;
+        }
+    </style>
+    <h3>I'm a regular h3</h3>
+    <div id="container"></div>
+
+    <hello-world heading="waddup">
+        Hello from the slot h3
+        <span slot="first-slot">Hello from the named slot
+    </hello-world>   
+    
+    <!-- els need a hyphen. custom to name according to scoping -- lut-card -->
+    <card-El heading="Here Lies the Great">
+        <span slot='description'>Nipsey Hussle</span>
+    </card-El>
+
+    <template id='card'>
+        <style>
+            p {
+                font-size: 21px;
+                word-spacing: 2px;
+            }
+            :host {
+                display: block;
+                box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.3);
+                border-radius: 10px;
+                padding: 10px;
+            }
+        </style>
+        <Header>
+            <h2></h2>
+        </Header>
+        <div>
+            <p><slot name='description'><slot/></p>            
+        </div>
+    </template>
+
+    <template id="first-template">
+        <style>
+            h3 {
+                color: blue;
+            }
+            span {
+                color: green;
+            }
+        </style>
+        <h2></h2>
+        <h3><slot /></h3>
+        <h3><slot name="first-slot"/></h3>
+    </template>
+    <script>
+        class HelloWorld extends HTMLElement {
+            constructor() {
+                super();
+
+                // 1. These run when the element is created
+
+                // An shadow that is open, has a root that can be accessed from outside the element. Closed shadows are not accessible from outside the component. An example of a closed shadow is the <video> element. 
+                const shadow = this.attachShadow({mode: 'open'});
+                const template = document.getElementById('first-template')
+                const clone = template.content.cloneNode(true);
+                shadow.appendChild(clone);
+                this.heading = shadow.querySelector('h2')
+                this.heading.innerHTML = this.headingAttr;
+            }
+
+            // 2. Method is called when the element is inserted into the document
+            connectedCallback () {
+
+            }
+            // 3b. this method is called when the element is removed from the DOM
+            disconnectedCallback () {
+
+            }
+
+            // list an array of attributes that should be observed - dynamic / listening   
+            static get observedAttributes () {
+
+            }
+
+            // 3a. runs when one of the observed attributes changes
+            attributeChangedCallback(attrName, oldVal, newVal) {
+
+            }
+
+            // called when the element is moved to a new document - rarely used
+            adoptedCallback() {}
+
+            get headingAttr() {
+                return this.getAttribute('heading') 
+            }
+        }
+        // const container = document.getElementById('container')
+        
+        // clone.addEventListener('click', () => alert('yeo'))
+        // container.appendChild(clone);
+
+        // const clone2 = template.content.cloneNode(true);
+        // container.appendChild(clone2);
+        class CardEl extends HTMLElement {
+            constructor () {
+                super();
+                // alternate syntax for attaching shadow
+                this.attachShadow({mode: 'open'});
+
+                const template = document.getElementById('card')
+                const clone = template.content.cloneNode(true);
+
+                // alternate syntax for appending elements to the shadow dom
+                this.shadowRoot.appendChild(clone);
+
+                // select the element where the attribute will be rendered
+                this.heading = this.shadowRoot.querySelector('h2')
+                // set it to the attribute's getter, but don't call the function 
+                this.heading.innerHTML = this.headingAttribute;
+            }
+            // To use an attribute, you need a getter and/or setter
+            get headingAttribute() {
+                return this.getAttribute("heading")
+            }
+        }
+        
+        customElements.define("hello-world", HelloWorld)
+        customElements.define("card-el", CardEl);
+       
+    </script>
+</body>
+</html>
