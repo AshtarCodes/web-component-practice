@@ -50,29 +50,33 @@ class Card extends HTMLElement {
 
     // 2. Method is called when the element is inserted into the document
     connectedCallback () {
-        this.subtractButton.addEventListener('click', this.subtract)
-        this.addButton.addEventListener('click', this.add)
+        this.subtractButton.addEventListener('click', this.handleSubtract)
+        this.addButton.addEventListener('click', this.handleAdd)
     }
 
-    subtract = () => {
-        if (this.min && Number(this.value) <= Number(this.min)) {
-            return;
+    handleAdd = () => {
+        const max = this.getAttribute('max');
+        if(max) {
+            if (+max <= this.value) return;
         }
-        this.value = Number(this.value) - 1
+        this.value = Number(this.value) + 1;
     }
-    add = () => {
-        if (this.max && Number(this.value) >= Number(this.max)){
-            return;
+
+    handleSubtract = () => {
+        const min = this.getAttribute('min');
+        if(min) {
+            if (+min >= this.value) return;
         }
-        this.value = Number(this.value) + 1
-    } 
+        this.value = Number(this.value) - 1;
+
+    }
 
 
     // 3b. this method is called when the element is removed from the DOM
     disconnectedCallback () {
         // cleanup
-        this.subtractButton.removeEventListener('click', this.subtract)
-        this.addButton.removeEventListener('click', this.add)
+        this.subtractButton.removeEventListener('click', this.handleSubtract)
+        this.addButton.removeEventListener('click', this.handleAdd)
     }
 
     // list an array of attributes that should be observed - dynamic / listening   
