@@ -4,9 +4,32 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "sass": "sass --watch src/scss/app.scss public/css/style.css",
+    "test": "mocha --require @babel/register",
+    "compile": "babel src -d public"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "sass": "^1.41.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.15.5",
+    "@babel/preset-env": "^7.15.6",
+    "@babel/register": "^7.15.3",
+    "chai": "^4.3.4",
+    "karma": "^6.3.4",
+    "karma-chai": "^0.1.0",
+    "karma-chrome-launcher": "^3.1.0",
+    "karma-firefox-launcher": "^2.1.1",
+    "karma-mocha": "^2.0.1",
+    "mocha": "^9.1.1",
+    "nyc": "^15.1.0"
+  },
+  "browserslist": [
+    "last 2 chrome versions",
+    "last 2 firefox versions"
+  ]
 }
