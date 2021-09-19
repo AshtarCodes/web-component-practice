@@ -126,6 +126,4 @@ class Card extends HTMLElement {
 // container.appendChild(clone2);
 customElements.define("lut-counter", Card);
 
-function getCard (){
-    return Card;
-}
+export { Card }

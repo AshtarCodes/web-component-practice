@@ -1,22 +1,16 @@
 // import { assert, expect } from 'chai';
-// import {Hello} from '../src/js/currentTest'
-// import { Card} from '../public/js/main';
+// import { Card} from '../src/js/main';
 
-const createComponent = () => {
-    const node = document.createElement('lut-counter');
-    node.setAttribute('value', 10);
-    node.setAttribute('min',0);
-    node.setAttribute('max', 15);
-    document.body.append(node);
-    return node;
-}
+
+    const createComponent = () => {
+        const node = document.createElement('lut-counter');
+        node.setAttribute('value', 10);
+        node.setAttribute('min',0);
+        node.setAttribute('max', 15);
+        document.body.append(node);
+        return node;
+    }
 const lutCounter = createComponent();
-
-describe('Hello should return a greeting string', function (){
-    it('Hello should return Hello', function (){
-        assert.strictEqual(Hello(), 'hello')
-    })
-})
 
 describe('Card component should exist', function(){
     it('Card should render', function(){
@@ -29,21 +23,22 @@ describe('Card component should exist', function(){
 
     describe('add/subtract', () => {
         it('should increment value when add button is clicked', () => {
-            lutCounter.shadowRoot.querySelector("#add").click();
+            lutCounter.addButton.click();
             const val = Number(lutCounter.value);
-            assert.isAbove(val, 10)
+            assert.strictEqual(val, 11)
         });
         it('should decrease by one when subtract button is clicked', () => {
-            lutCounter.shadowRoot.querySelector("#subtract").click();
+            lutCounter.subtractButton.click();
             const val2 = Number(lutCounter.value);
-            assert.isBelow(val2, 11)
+            assert.strictEqual(val2, 10)
         })
         it('should update value in innerHTML of h3 element', () => {
+            lutCounter.subtractButton.click();
             const h3 = Number(lutCounter.valueHeader.innerHTML);
-            console.log(h3);
-            assert.strictEqual(h3, 10)
+            assert.strictEqual(h3, 9)
         })
     })
 })
+
 
 
