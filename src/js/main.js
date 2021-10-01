@@ -1,5 +1,5 @@
 const template = document.createElement('template');
-template.style = `
+template.innerHTML = `
 <style>
         :host {
           display: flex;
@@ -20,14 +20,13 @@ template.style = `
           border: 1px solid #000;
         }
       </style>
-`;
-template.setAttribute('id','card');
-template.innerHTML = 
-    `<button id="subtract" title="subtract">-</button>
+      <button id="subtract" title="subtract">-</button>
     <h3 class="counter__display-text"></h3>
     <button id="add" title="add">+</button>
 `;
+template.setAttribute('id','card');
 
+console.log(template);
 class Card extends HTMLElement {
     constructor() {
         super();
