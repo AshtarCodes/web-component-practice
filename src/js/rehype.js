@@ -1,15 +1,18 @@
 import fs from 'fs';
 import { unified } from 'unified';
+import {rehype} from 'rehype';
 import parse from 'rehype-parse';
-import html from 'rehype-stringify';
-import transform from './transform';
+import DOMparse from 'rehype-dom-parse'
+import toHtml from 'rehype-stringify';
+import toHtmlDOM from 'rehype-dom-stringify';
+import transform from './transform.js';
 
-const tree = () => tree => console.log(JSON.stringify(tree, null, 2));
+const fullTree = () => tree => console.log(JSON.stringify(tree, null, 2));
 
 const contents = unified()
   .use(parse)
   .use(transform)
-  .use(html)
+  .use(toHtml)
   .processSync(fs.readFileSync(`${process.cwd()}/html/counterElement.html`))
   .toString();
 
